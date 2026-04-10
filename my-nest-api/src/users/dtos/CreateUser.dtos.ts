@@ -2,9 +2,9 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
-  username: string | undefined;
+  username!: string;
 
   @IsEmail()
   @IsNotEmpty()
-  email: string | undefined;
+  email!: string;
 }

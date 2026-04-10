@@ -1,7 +1,10 @@
+import { UsersService } from './../../services/users/users.service';
 import {
   Body,
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   ParseBoolPipe,
   ParseIntPipe,
@@ -17,15 +20,17 @@ import { Validate } from 'class-validator';
 
 @Controller('users')
 export class UsersController {
-  //Query Params
-  @Get()
-  getUsersByQuery(@Query('sortBy', ParseBoolPipe) sortBy: boolean) {
-    return [{ username: 'Image', email: 'image@gmail.com', sortBy }];
-  }
+  constructor(private userService: UsersService) {}
 
   @Get()
   getUsers() {
-    return [{ username: 'Image', email: 'image@gmail.com' }];
+    return this.userService.fetchUsers();
+  }
+
+  //Query Params
+  @Get('query')
+  getUsersByQuery(@Query('sortBy', ParseBoolPipe) sortBy: boolean) {
+    return [{ username: 'Image', email: 'image@gmail.com', sortBy }];
   }
 
   @Get('posts')
@@ -52,13 +57,15 @@ export class UsersController {
   @UsePipes(new ValidationPipe())
   createUser(@Body() userData: CreateUserDto) {
     console.log(userData.username);
-    return 'Created';
+    return this.userService.createUsers(userData);
   }
 
   //Route Params
   @Get(':id')
   getUserById(@Param('id', ParseIntPipe) id: number) {
     console.log(id);
-    return { id };
+    const user = this.userService.getUsersById(id);
+    if (!user)
+      throw new HttpException('User not Found', HttpStatus.BAD_REQUEST);
   }
 }
