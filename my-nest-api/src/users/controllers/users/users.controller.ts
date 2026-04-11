@@ -56,14 +56,12 @@ export class UsersController {
   @Post('create')
   @UsePipes(new ValidationPipe())
   createUser(@Body() userData: CreateUserDto) {
-    console.log(userData.username);
     return this.userService.createUsers(userData);
   }
 
   //Route Params
   @Get(':id')
   getUserById(@Param('id', ParseIntPipe) id: number) {
-    console.log(id);
     const user = this.userService.getUsersById(id);
     if (!user)
       throw new HttpException('User not Found', HttpStatus.BAD_REQUEST);
