@@ -5,10 +5,10 @@ import { plainToClass } from 'class-transformer';
 @Injectable()
 export class UsersService {
   private users: User[] = [
-    { username: 'image', password: 'image123' },
-    { username: 'danny', password: 'danny123' },
-    { username: 'derek', password: 'derek123' },
-    { username: 'samantha', password: 'samantha123' },
+    { id: 1, username: 'image', password: 'image123' },
+    { id: 2, username: 'danny', password: 'danny123' },
+    { id: 3, username: 'derek', password: 'derek123' },
+    { id: 4, username: 'samantha', password: 'samantha123' },
   ];
 
   getUsers() {
@@ -18,5 +18,9 @@ export class UsersService {
   }
   getUserByUsername(username: string) {
     return this.users.find((user) => user.username);
+  }
+
+  getUserById(id: number) {
+    return this.users.find((user) => user.id === id);
   }
 }
