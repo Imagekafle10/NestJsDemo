@@ -18,8 +18,8 @@ export class UsersController {
     @Inject('USER_SERVICE') private readonly usersService: UsersService,
   ) {}
 
-  @Get()
   @UseInterceptors(ClassSerializerInterceptor)
+  @Get()
   getUsers() {
     return this.usersService.getUsers();
   }
