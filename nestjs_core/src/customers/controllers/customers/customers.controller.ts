@@ -26,7 +26,7 @@ export class CustomersController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    console.log(typeof id);
+    // console.log(typeof id);
 
     const customer = this.customersService.findCustomersById(id);
     if (customer) {
